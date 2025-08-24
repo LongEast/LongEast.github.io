@@ -3,34 +3,80 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Junyi Liu</title>
+  <title>Junyi — Slides</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .slide { opacity: 0; pointer-events: none; transition: opacity .45s ease; }
+    .slide.active { opacity: 1; pointer-events: auto; }
+  </style>
 </head>
-<body class="min-h-screen bg-slate-50 text-slate-900">
-  <header class="mx-auto max-w-5xl px-6 py-12">
-    <h1 class="text-3xl font-bold">Hi, I'm Junyi 👋</h1>
-    <p class="mt-2 text-slate-600">CS @ UNSW · Blockchain • Systems • AI</p>
-    <nav class="mt-6 flex gap-4 text-sm">
-      <a class="underline-offset-4 hover:underline" href="#projects">Projects</a>
-      <a class="underline-offset-4 hover:underline" href="#resume">Resume</a>
-      <a class="underline-offset-4 hover:underline" href="#contact">Contact</a>
-    </nav>
-  </header>
-
-  <main class="mx-auto max-w-5xl px-6">
-    <section id="projects" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      <article class="rounded-2xl border bg-white p-6 shadow-sm">
-        <h3 class="font-semibold">Cake Cold-Chain</h3>
-        <p class="mt-2 text-sm text-slate-600">Solidity + ethers.js PoC with roles & sensor oracle.</p>
-        <a class="mt-3 inline-block text-sm font-medium text-blue-600 hover:underline" href="#">View repo</a>
-      </article>
-      <!-- add more cards -->
+<body class="h-screen overflow-hidden">
+  <!-- Deck -->
+  <div id="deck" class="relative h-full w-full">
+    <section class="slide active absolute inset-0 grid place-items-center bg-slate-900 text-white">
+      <div class="text-center">
+        <h1 class="text-5xl font-extrabold">Junyi</h1>
+        <p class="mt-3 text-slate-300">Blockchain • Systems • AI</p>
+        <p class="mt-10 text-sm opacity-80">Scroll or press ↑/↓</p>
+      </div>
     </section>
-  </main>
 
-  <footer class="mx-auto max-w-5xl px-6 py-16 text-sm text-slate-500">
-    © <span id="y"></span> Junyi Liu
-  </footer>
-  <script>document.getElementById('y').textContent = new Date().getFullYear()</script>
+    <section class="slide absolute inset-0 grid place-items-center bg-white">
+      <div class="max-w-2xl text-center px-6">
+        <h2 class="text-3xl font-bold">Cake Cold-Chain</h2>
+        <p class="mt-3 text-slate-600">Solidity 0.8 · OZ AccessControl · ethers.js · TS backend.</p>
+        <a href="https://github.com/LongEast" class="mt-6 inline-block rounded-xl border px-6 py-3">View repo</a>
+      </div>
+    </section>
+
+    <section class="slide absolute inset-0 grid place-items-center bg-slate-100">
+      <div class="text-center px-6">
+        <h2 class="text-3xl font-bold">Timeline</h2>
+        <p class="mt-3 text-slate-600">2025 PoC • 2024 Networks • 2023 OOP</p>
+      </div>
+    </section>
+
+    <section class="slide absolute inset-0 grid place-items-center bg-slate-900 text-white">
+      <div class="text-center px-6">
+        <h2 class="text-3xl font-bold">Contact</h2>
+        <a class="mt-6 inline-block rounded-xl bg-white/10 px-6 py-3" href="mailto:you@example.com">Email me</a>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const slides = [...document.querySelectorAll('.slide')];
+    let i = 0, busy = false;
+
+    function show(idx) {
+      slides[i].classList.remove('active');
+      i = (idx + slides.length) % slides.length;
+      slides[i].classList.add('active');
+    }
+
+    function next(n=1) { if (!busy) { busy = true; show(i + n); setTimeout(()=>busy=false, 480); } }
+
+    // wheel (one step per gesture)
+    window.addEventListener('wheel', (e) => {
+      if (Math.abs(e.deltaY) < 20) return;
+      next(e.deltaY > 0 ? 1 : -1);
+    }, { passive: true });
+
+    // arrows / space / page up/down
+    window.addEventListener('keydown', (e) => {
+      if (['ArrowDown','PageDown',' '].includes(e.key)) { e.preventDefault(); next(1); }
+      if (['ArrowUp','PageUp'].includes(e.key))        { e.preventDefault(); next(-1); }
+    });
+
+    // touch swipe
+    let startY=null;
+    window.addEventListener('touchstart', e=> startY = e.touches[0].clientY, {passive:true});
+    window.addEventListener('touchend', e=>{
+      if(startY==null) return;
+      const dy = startY - (e.changedTouches[0].clientY);
+      if (Math.abs(dy) > 30) next(dy>0?1:-1);
+      startY=null;
+    }, {passive:true});
+  </script>
 </body>
 </html>
