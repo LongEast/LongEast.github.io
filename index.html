@@ -1,1 +1,36 @@
-Hello World
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Junyi Liu</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-900">
+  <header class="mx-auto max-w-5xl px-6 py-12">
+    <h1 class="text-3xl font-bold">Hi, I'm Junyi 👋</h1>
+    <p class="mt-2 text-slate-600">CS @ UNSW · Blockchain • Systems • AI</p>
+    <nav class="mt-6 flex gap-4 text-sm">
+      <a class="underline-offset-4 hover:underline" href="#projects">Projects</a>
+      <a class="underline-offset-4 hover:underline" href="#resume">Resume</a>
+      <a class="underline-offset-4 hover:underline" href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="mx-auto max-w-5xl px-6">
+    <section id="projects" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <article class="rounded-2xl border bg-white p-6 shadow-sm">
+        <h3 class="font-semibold">Cake Cold-Chain</h3>
+        <p class="mt-2 text-sm text-slate-600">Solidity + ethers.js PoC with roles & sensor oracle.</p>
+        <a class="mt-3 inline-block text-sm font-medium text-blue-600 hover:underline" href="#">View repo</a>
+      </article>
+      <!-- add more cards -->
+    </section>
+  </main>
+
+  <footer class="mx-auto max-w-5xl px-6 py-16 text-sm text-slate-500">
+    © <span id="y"></span> Junyi Liu
+  </footer>
+  <script>document.getElementById('y').textContent = new Date().getFullYear()</script>
+</body>
+</html>
